@@ -28,7 +28,6 @@ function initThree(){
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMapEnabled = true;
 
-
     // position and point the camera to the center of the scene
     camera.position.x = 500;
     camera.position.y = 40;
@@ -66,6 +65,8 @@ function initThree(){
     addStatsObject();
 
     render();
+
+    console.log("Initialazing!")
 
     window.addEventListener('resize', handleResize, false);
 
