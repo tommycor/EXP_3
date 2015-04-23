@@ -4,10 +4,10 @@ function wave(center, mesh, vitesse){
 	for(var i=0 ; i<mesh.geometry.vertices.length ; i++)
 	{
 		delays[i] = getDistance(center, mesh.geometry.vertices[i])// / vitesse
-		// mesh.geometry.vertices[i].y = delays[i]*30;
+		mesh.geometry.vertices[i].y = delays[i];
 	}
-	console.log("new!")
-	console.log(delays[0])
+	
+	// console.log(delays[0])
 	mesh.geometry.verticesNeedUpdate = true;
 
 }
@@ -20,6 +20,6 @@ function getDistance(center, target){
     }
 
     dist = Math.sqrt(dist.x*dist.x + dist.z*dist.z);
-
+	console.log(dist)
     return dist
 }
