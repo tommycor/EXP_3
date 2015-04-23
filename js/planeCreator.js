@@ -31,26 +31,30 @@ function createPlane3D(depth, width,margin, height){
 		}
 	}
 
-	geometry.needsUpdate = true;
-	geometry.uvsNeedUpdate = true;
+	// geometry.needsUpdate = true;
+	// geometry.uvsNeedUpdate = true;
+	// geometry.dynamic = true;
 
     // compute the normals
     // geometry.computeVertexNormals(true);
     // geometry.computeFaceNormals();
 
     // setup the material
-    var mat = new THREE.ShaderMaterial({
-	    vertexShader: document.getElementById( 'vertexShader' ).textContent,
-	    fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+ //    var mat = new THREE.ShaderMaterial({
+	//     vertexShader: document.getElementById( 'vertexShader' ).textContent,
+	//     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+	// });
+
+	// mat.needsUpdate = true;
+
+    var mat = new THREE.MeshBasicMaterial({
+        wireframe: true,
+        color: 'white'
 	});
-
-	mat.needsUpdate = true;
-
     // mat.vertexColors = THREE.FaceColors;
     // mat.shading = THREE.SmoothShading;
     // mat.castShadow = false;
     // mat.receiveShadow = false;
-    console.log(geometry)
     // create the mesh
     var plane = new THREE.Mesh(geometry,mat);
     plane.name = 'field';

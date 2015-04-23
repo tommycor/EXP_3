@@ -4,14 +4,16 @@ var scene;
 var camera;
 var cameraControl;
 
-var depth = 200;
-var width = 200;
+var depth = 20;
+var width = 20;
 var margin = 10;
 var MAX_HEIGHT = 5;
 var groundMesh;
 var sizeSelector = 15;
-var upping = 5;
-var looking = new THREE.Vector3( 1000, 0, 1000 );
+var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
+
+var maxDuration = 4; //secondes
+var vitesse = (depth*margin)/maxDuration;
 
 var state = false;
 
@@ -58,16 +60,15 @@ function initThree(){
         this.camX = 40;
         this.camY = 1000;
         this.camZ = 1010;
-        this.selector = sizeSelector;
-        this.depth_modifier = upping;
     };
     addControlGui(control);
     addStatsObject();
 
     render();
 
-    console.log("Initialazing!")
+    console.log("Initialazing!");
 
+    window.addEventListener('mousedown', createWave, false);
     window.addEventListener('resize', handleResize, false);
 
 }
@@ -78,8 +79,6 @@ function render() {
     camera.position.y = control.camY;
     camera.position.z = control.camZ;
     camera.lookAt( looking );
-    sizeSelector = control.selector;
-    upping = control.depth_modifier;
 
     stats.update();
     renderer.render(scene, camera);
@@ -87,13 +86,17 @@ function render() {
     requestAnimationFrame(render);
 }
 
+function createWave(event){
+    var center = getPosition(event, groundMesh)
+    if (typeof center != "undefined")
+        wave(center, groundMesh, vitesse);
+}
+
 function addControlGui(controlObject) {
     var gui = new dat.GUI();
     gui.add(controlObject, 'camX', -1000, 1000);
     gui.add(controlObject, 'camY', 0, 1500);
     gui.add(controlObject, 'camZ', 0, 2000);
-    gui.add(controlObject, 'selector', 0, 30);
-    gui.add(controlObject, 'depth_modifier', -30, 30);
 }
 
 function addStatsObject() {

@@ -8,7 +8,9 @@ function getPosition(event, mesh)
     var raycaster = new THREE.Raycaster(camera.position,vector.sub(camera.position).normalize() );
     // On regarde les intersections entre le plan locate (invisible et au niveau des cubes) et le raycaster
     var intersect = raycaster.intersectObject( mesh );
+    // console.log(intersect);
 
+    if(intersect.length >= 1)
     return {
 		x: intersect[0].point.x, 
 		y: intersect[0].point.y, 
