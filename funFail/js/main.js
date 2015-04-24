@@ -14,11 +14,10 @@ var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
-var maxAmplitude = 80;
+var maxAmplitude = 30;
 var frequence = 20;
-var duration = 2000;
-var diameter = 1;
-var waves = [];
+var duration = 3000;
+var diameter = 3;
 
 var state = false;
 
@@ -86,15 +85,6 @@ function render() {
     camera.position.z = control.camZ;
     camera.lookAt( looking );
 
-        for(var i=0; i < waves.length; i++)
-        {
-            waves[i].update();
-            if(waves[i].currentTime > duration){
-                waves[i] = null;
-                waves.splice(i, 1);
-            }
-        }
-
     stats.update();
     renderer.render(scene, camera);
 
@@ -104,7 +94,9 @@ function render() {
 function createWave(event){
     var center = getPosition(event, groundMesh)
     if (typeof center != "undefined")
-        waves.push(new Wave(center, groundMesh, vitesse, maxAmplitude, frequence, diameter, duration));
+        wave = new Wave(center, groundMesh, vitesse, maxAmplitude, frequence, diameter);
+
+    // console.log(wave.)
 }
 
 function addControlGui(controlObject) {

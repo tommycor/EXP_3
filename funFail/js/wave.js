@@ -1,4 +1,4 @@
-function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration){
+function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter){
 	this.center = center;
 	this.mesh = mesh;
 	this.vitesse = vitesse;
@@ -6,14 +6,12 @@ function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration
 	this.frequence = frequence;
 	this.diameter = diameter;
 	this.begining = Date.now();
-	this.currentTime = Date.now();
-	this.duration = duration;
-
-	this.slower = 50;
 
 	this.delays = [];
+	console.log(this)
 
-	time = 1500;
+	time = 0;
+	facteurTime = -((time)*(1/3000))+1;
 
 	for(var i=0 ; i<mesh.geometry.vertices.length ; i++)
 	{
@@ -22,24 +20,6 @@ function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration
 		var amplitude = getAmplitude(this.maxAmplitude, distance, this.diameter);
 		if(amplitude > 0)
 			mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin(this.delays[i]*this.frequence)*amplitude*this.facteurTime;
-	}
-
-
-	this.update = function(){
-		this.currentTime = (Date.now() - this.begining);
-
-		this.facteurTime = -((this.currentTime)*(1/this.duration))+1;
-
-
-		for(var i=0 ; i<mesh.geometry.vertices.length ; i++)
-		{
-			var distance = getDistance(this.center, mesh.geometry.vertices[i]);
-			this.delays[i] = distance / this.vitesse;
-			var amplitude = getAmplitude(this.maxAmplitude, distance, this.diameter);
-			if(amplitude > 0)
-				mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin((this.delays[i]*this.frequence)-(this.currentTime)/this.slower)*amplitude*this.facteurTime;
-		}
-		mesh.geometry.verticesNeedUpdate = true;
 	}
 
 	mesh.geometry.verticesNeedUpdate = true;
