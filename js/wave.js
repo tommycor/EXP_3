@@ -9,21 +9,10 @@ function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration
 	this.currentTime = Date.now();
 	this.duration = duration;
 
+	this.last = [];
 	this.slower = 50;
 
 	this.delays = [];
-
-	time = 1500;
-
-	for(var i=0 ; i<mesh.geometry.vertices.length ; i++)
-	{
-		var distance = getDistance(this.center, mesh.geometry.vertices[i]);
-		this.delays[i] = distance / this.vitesse;
-		var amplitude = getAmplitude(this.maxAmplitude, distance, this.diameter);
-		if(amplitude > 0)
-			mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin(this.delays[i]*this.frequence)*amplitude*this.facteurTime;
-	}
-
 
 	this.update = function(){
 		this.currentTime = (Date.now() - this.begining);
@@ -36,8 +25,10 @@ function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration
 			var distance = getDistance(this.center, mesh.geometry.vertices[i]);
 			this.delays[i] = distance / this.vitesse;
 			var amplitude = getAmplitude(this.maxAmplitude, distance, this.diameter);
-			if(amplitude > 0)
-				mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin((this.delays[i]*this.frequence)-(this.currentTime)/this.slower)*amplitude*this.facteurTime;
+			if(amplitude > 0){
+				mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin((this.delays[i]*this.frequence)-((this.currentTime)/this.slower))*amplitude*this.facteurTime;
+				this.last[i] = mesh.geometry.vertices[i].y;
+			}
 		}
 		mesh.geometry.verticesNeedUpdate = true;
 	}

@@ -14,11 +14,12 @@ var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
-var maxAmplitude = 80;
-var frequence = 20;
+var maxAmplitude = 10;
+var frequence = 10;
 var duration = 2000;
-var diameter = 1;
+var diameter = 3;
 var waves = [];
+var mouseState = false;
 
 var state = false;
 
@@ -74,7 +75,9 @@ function initThree(){
 
     console.log("Initialazing!");
 
-    window.addEventListener('mousedown', createWave, false);
+    window.addEventListener('mousedown', function(){ mouseState = true }, false);
+    window.addEventListener('mouseup', function(){ mouseState = false }, false);
+    window.addEventListener('mousemove', createWave, false);
     window.addEventListener('resize', handleResize, false);
 
 }
@@ -102,9 +105,11 @@ function render() {
 }
 
 function createWave(event){
-    var center = getPosition(event, groundMesh)
-    if (typeof center != "undefined")
-        waves.push(new Wave(center, groundMesh, vitesse, maxAmplitude, frequence, diameter, duration));
+    if(mouseState){
+        var center = getPosition(event, groundMesh)
+        if (typeof center != "undefined")
+            waves.push(new Wave(center, groundMesh, vitesse, maxAmplitude, frequence, diameter, duration));
+    }
 }
 
 function addControlGui(controlObject) {
