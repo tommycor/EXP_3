@@ -14,9 +14,9 @@ var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
-var maxAmplitude = 10;
-var frequence = 10;
-var duration = 2000;
+var maxAmplitude = 15;
+var frequence = 5;
+var duration = 4000;
 var diameter = 3;
 var waves = [];
 var mouseState = false;
