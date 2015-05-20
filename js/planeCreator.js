@@ -30,10 +30,27 @@ function createPlane3D(depth, width,margin, height){
 		}
 	}
 
-    var mat = new THREE.MeshBasicMaterial({
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+
+    attributes = {
+        displacement: {
+            type: 'f',
+            value: []
+        }
+    };
+
+    for( i = 0; i < geometry.vertices.length; i++ )
+    {
+        attributes.displacement.value.push(0);
+    }
+
+    var mat = new THREE.ShaderMaterial( {
+        attributes:     attributes,
         wireframe: true,
-        color: 'white'
-	});
+        vertexShader: document.getElementById( 'vertexShader' ).textContent,
+        fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+    });
     
 
     var plane = new THREE.Mesh(geometry,mat);

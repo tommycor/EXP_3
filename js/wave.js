@@ -34,18 +34,14 @@ function Wave(center, mesh, vitesse, maxAmplitude, frequence, diameter, duration
 
 			if(amplitude > 0){
 				var mover = Math.sin((this.delays[i]*this.frequence)-((this.currentTime)/this.slower))*amplitude*this.facteurTime;
-				// mesh.geometry.vertices[i].y = mesh.geometry.vertices[i].displacement + Math.sin((this.delays[i]*this.frequence)-((this.currentTime)/this.slower))*amplitude*this.facteurTime;
-				mesh.geometry.vertices[i].y = (mesh.geometry.vertices[i].y - this.last[i]) + mover;
+				attributes.displacement.value[i] += mover - this.last[i];
 				this.last[i] = mover;
 			}
 			else{
 				this.last[i] = 0;
 			}
 		}
-		mesh.geometry.verticesNeedUpdate = true;
 	}
-
-	mesh.geometry.verticesNeedUpdate = true;
 }
 
 

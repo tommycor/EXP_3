@@ -19,20 +19,28 @@
     <script src="libs/stats.min.js"></script>
     <script src="libs/tween.min.js"></script>
     <script src="libs/OrbitControls.js"></script>
-    <!-- <script type="x-shader/x-vertex" id="vertexShader">
+    <script type="x-shader/x-vertex" id="vertexShader">
+
+        attribute float displacement;
+        varying vec3 vNormal;
+
         void main() {
 
-            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+            vNormal = normal;
+
+            vec3 newPosition = position + normal * vec3(displacement);
+
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
         }
     </script>
     <script type="x-shader/x-vertex" id="fragmentShader">
         void main() {
 
-            gl_FragColor = vec4(1, 1, 1, 1);
+            gl_FragColor = vec4(1, 1, 1, 0.5);
 
         }
-    </script> -->
+    </script>
     <script src="js/planeCreator.js"></script>
     <script src="js/getPosition.js"></script>
     <script src="js/wave.js"></script>

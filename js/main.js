@@ -4,13 +4,14 @@ var scene;
 var camera;
 var cameraControl;
 
-var depth = 200;
-var width = 200;
-var margin = 10;
+var depth = 100;
+var width = 100;
+var margin = 15;
 var MAX_HEIGHT = 10;
 var groundMesh;
 var sizeSelector = 15;
 var looking = new THREE.Vector3( (depth*margin)/2, 0, (depth*margin)/2 );
+var attributes;
 
 var maxDuration = 4; //secondes
 var vitesse = (depth*margin)/maxDuration;
@@ -89,14 +90,16 @@ function render() {
     camera.position.z = control.camZ;
     camera.lookAt( looking );
 
-        for(var i=0; i < waves.length; i++)
-        {
-            waves[i].update();
-            if(waves[i].currentTime > duration){
-                waves[i] = null;
-                waves.splice(i, 1);
-            }
+    for(var i=0; i < waves.length; i++)
+    {
+        waves[i].update();
+        if(waves[i].currentTime > duration){
+            waves[i] = null;
+            waves.splice(i, 1);
         }
+    }
+
+    attributes.displacement.needsUpdate = true;
 
     stats.update();
     renderer.render(scene, camera);
